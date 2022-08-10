@@ -1,0 +1,135 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+{% block content %}
+{% include 'base.html' %}
+
+ <nav class="navbar text-white navbar-expand-lg fixed-top" style="font-family: 'Amatic SC', cursive;font-size:30px;background:black">
+        <a class="navbar-brand text-white" style="font-size:30px;padding:10px;" href="{{url_for('home')}}"><i style="padding-right:10px;" class="fa-solid fa-mug-hot"></i>Cafe</a>
+        <button class="navbar-toggler" data-bs-target="#menu" data-bs-toggle="collapse"> <span class="navbar-toggler-icon" style="color:white"></span></button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link text-white" href="{{url_for('home',_anchor='preference')}}">Preference</a></li>
+                {% if (user): %}
+                <li class="nav-item"><a class="nav-link text-white" href="{{url_for('logout')}}">Log_out</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{{url_for('add')}}">Add Cafe</a></li>
+
+                {% else :%}
+                    <li class="nav-item"><a class="nav-link text-white" href="{{url_for('login',key='register')}}">Register</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{url_for('login',key='log_in')}}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        </nav>
+
+<div class="container" style="width:60%;margin-top:50px;">
+
+    <div class="row" style="color:white;">
+        <div style="padding-top:80px;padding-left:50px;color:black">
+        <h1 style="color:black;font-family: 'Amatic SC', cursive;font-size:60px;">Cafe</h1>
+        <hr style="border: 1px solid #DEB6AB;width:20%">
+        </div>
+
+        <div  style="margin: 0 auto">
+            <div class='card' style="margin-top:50px;text-align:center;font-family: 'Amatic SC', cursive;color:black;">
+                 <div class="card-header text-white" style="background:#DEB6AB;"><h1 style="line-height:70px;font-size:50px;">Cafe's name :{{cafe.name}}</h1></div>
+                 <div class="card-body" style="background:#fff;">
+                    <h1 style="line-height:70px;font-size:50px;">Opening hours :{{cafe.opening_hours }}</h1>
+                    <h1 style="font-size:50px;line-height:70px;">Location :{{cafe.location}} </h1>
+                    <h1 style="font-size:50px;line-height:70px;">Stars :{{cafe.stars }}</h1>
+                </div>
+
+                <div class="card-footer" style="background:#AC7D88;">
+                    <div class="row">
+                        {% if cafe.wifi == 'yes' :%}
+                        <h3 class="col"><img style="width:40%;;" src="../static/img/wifi.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.sockets == 'yes' :%}
+                            <h3 class='col'><img style="width:40%;;" src="../static/img/power-plug.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.long_stay == 'yes' :%}
+                            <h3 class='col'><img style="width:40%;;" src="../static/img/long_stay.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.tables == 'yes' :%}
+                            <h3 class='col'><img style="width:40%;;" src="../static/img/chair.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.quiet == 'yes' :%}
+                            <h3 class='col'><img style="width:40%;;" src="../static/img/mute-speaker.png"></h3>
+                        {% endif %}
+
+
+                        {% if cafe.coffee == 'yes' :%}
+                        <h3 class='col'><img style="width:40%;;" src="../static/img/coffee.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.food == 'yes' :%}
+                        <h3 class='col'><img style="width:40%;;" src="../static/img/restaurant.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.alcohol == 'yes' :%}
+                        <h3 class='col'><img style="width:40%;;" src="../static/img/wine-bottle.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.restroom == 'yes' :%}
+                        <h3 class='col'><img style="width:40%;;" src="../static/img/toilet.png"></h3>
+                        {% endif %}
+
+                        {% if cafe.parking == 'yes' :%}
+                        <h3 class='col'><img style="width:40%;;" src="../static/img/parking.png"></h3>
+                        {% endif %}
+
+                    </div>
+
+                    </div>
+
+                </div>
+        </div>
+        <hr style="color:;margin-top:80px; border: 10px solid #85586F;border-radius: 5px;">
+        <h1 style="color:black;margin-top:100px;font-family: 'Amatic SC', cursive;font-size:60px">Comments</h1>
+        <hr style="border: 1px solid #DEB6AB;width:20%;margin-bottom:80px;">
+
+        <div class="col-lg-12 card" style="padding-top:80px;padding-left:50px;color:black;font-size:30px;font-family: 'Amatic SC', cursive;">
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages: %}
+                        {% for msg in messages: %}
+                            <p style="color:red">{{msg}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+            {{wtf.quick_form(form,novalidate=True,button_map={"submit": "danger"})}}
+            <hr style="border: 1px solid #DEB6AB">
+
+            <div class="row" style="margin-top:100px;">
+             <ul class="commentList">
+                 {% if user and comments: %}
+                  {% for comment in comments: %}
+                <li style="list-style-type:None;">
+                    <div class="col-lg-2 col-md-2 col-sm-4" >
+<!--                        float用在自己身上-->
+                      <img style="width:80%;float:left;" src="{{ comment.user.user | gravatar }}"/>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-8" style="display:inline-block;padding-left:20px;">
+                        <p style="">{{comment.comment|safe}}</p>
+                        <p style="color:grey">{{comment.user_name}}</p>
+                    </div>
+                    <hr style="border: 1px solid #DEB6AB;">
+                </li>
+                  {% endfor %}
+                 {% endif %}
+              </ul>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script src="https://kit.fontawesome.com/6c9fad4023.js" crossorigin="anonymous"></script>
+
+{% endblock %}

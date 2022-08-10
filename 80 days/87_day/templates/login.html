@@ -1,0 +1,25 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %} Cafe {% endblock %}
+
+{% block content%}
+
+{% include 'base.html' %}
+<body style="font-size:30px;font-family: 'Amatic SC', cursive;text-align:center;color:white;opacity:0.75;width:30%;margin:200px auto;background-image:url('../static/img/footer_bg.jpg');background-size:cover;background-position:center">
+    <br>
+    <h1>{{key}}</h1>
+    <br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages: %}
+            {% for msg in messages: %}
+                <p style="color:red">{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div style="font-size:30px;font-family: 'Amatic SC', cursive;">    {{wtf.quick_form(form,novalidate=True,button_map={"submit": "primary"})}}</div>
+
+
+
+</body>
+{% endblock %}

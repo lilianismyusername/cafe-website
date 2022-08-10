@@ -1,0 +1,28 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title%}
+Cafe
+{% endblock%}
+
+{% block content %}
+{% include 'base.html' %}
+<!--加了row等於幫他設了width，有了width你就可以去margin auto-->
+<div class="row">
+    <div class="col-lg-6 col-md-8 col-sm-10" style="margin:100px auto;font-size:30px;font-family: 'Amatic SC', cursive;">
+
+       {% with messages = get_flashed_messages() %}
+        {% if messages: %}
+            {% for msg in messages: %}
+                <p style="color:red">{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+      {{wtf.quick_form(form,novalidate=True,button_map={"submit": "primary"})}}
+
+</div>
+
+</div>
+
+{% endblock %}

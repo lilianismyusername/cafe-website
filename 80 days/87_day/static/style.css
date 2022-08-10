@@ -1,0 +1,29 @@
+.navbar-brand {color:white;font-size:500px;}
+
+.navbar-link {color:#603601}
+
+.navbar {font-family: 'Merienda', cursive;}
+
+.btn {width:100px;}
+
+.choices {background:#CEAB93}
+
+.choice-stiker {padding:30px 0 50px 50px}
+
+#preference {font-family: 'Merienda', cursive;}
+
+#items {font-family: 'Amatic SC', cursive;font-size:80px;color:black}
+
+footer {height:200px;background-image:url('../static/img/footer_bg.jpg');background-repeat:no-repeat;background-position:center;background-size:cover;}
+
+@media (min-width:1300px)
+{#cafe_img {width:150px;margin-top:50px;}}
+
+@media (max-width:1300px)
+{#cafe_img {display:None;}}
+
+@media (min-width:1200px)
+{.choice-stiker {width:120px;padding:30px 0 50px 50px}}
+
+@media (max-width:1200px)
+{.choice-stiker {width:80px;padding:0px}}
